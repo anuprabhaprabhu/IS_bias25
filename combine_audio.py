@@ -1,8 +1,6 @@
 import os, sys 
 import pandas as pd
 from pydub import AudioSegment
-# sound1 = AudioSegment.from_file("/path/to/sound.wav", format="wav")
-# sound2 = AudioSegment.from_file("/path/to/another_sound.wav", format="wav")
 
 # # sound1 6 dB louder
 # louder = sound1 + 6
