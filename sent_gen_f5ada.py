@@ -16,26 +16,36 @@ def generate_toml_and_run_infer(wav_file):
     ref_text = row['text']
     gen_text = row['gen_text']
     output_file = row['out_path']
-    toml_content = f"""
-    model = "F5-TTS"
-    ref_audio = "{wav_file}"
-    # If an empty "", transcribes the reference audio automatically.
-    ref_text = "{ref_text}"
-    gen_text = "{gen_text}"
-    # File with text to generate. Ignores the text above.
-    #gen_file = ""
-    remove_silence = false
-    output_dir = "/home2/anuprabha.m/dysar_25/F5-TTS/src/f5_tts/infer/gen_combined_ua/"
-    output_file = "{output_file}"
-    """
+    # toml_content = f"""
+    # model = "F5-TTS"
+    # ref_audio = "{wav_file}"
+    # # If an empty "", transcribes the reference audio automatically.
+    # ref_text = "{ref_text}"
+    # gen_text = "{gen_text}"
+    # # File with text to generate. Ignores the text above.
+    # #gen_file = ""
+    # remove_silence = false
+    # output_dir = "/home2/anuprabha.m/dysar_25/F5-TTS/src/f5_tts/infer/gen_combined_ua/"
+    # output_file = "{output_file}"
+    # """
 
+    # toml_file = f"{os.path.basename(wav_file).replace('.wav','')}.toml"
+    # with open(toml_file, 'w') as f:
+    #     f.write(toml_content)
 
-    toml_file = f"{os.path.basename(wav_file).replace('.wav','')}.toml"
-    with open(toml_file, 'w') as f:
-        f.write(toml_content)
+    # subprocess.run(["f5-tts_infer-cli", "-c", toml_file])
+    # os.remove(toml_file)
 
-    subprocess.run(["f5-tts_infer-cli", "-c", toml_file])
-    os.remove(toml_file)
+    command = [
+        'python', 'infer_cli.py', 
+        '--model', 'F5-TTS',
+        '--ref_audio', wav_file,
+        '--ref_text', ref_text,
+        '--gen_text', gen_text,
+        '--output_dir', "/home2/anuprabha.m/dysar_25/F5-TTS/src/f5_tts/infer/gen_combined_ua/",
+        '--output_file', output_file
+    ]
+    subprocess.run(command, check=True, text=True, capture_output=True)
 
 
 df = pd.read_csv('/home2/anuprabha.m/dysar_25/F5-TTS/src/f5_tts/infer/genfile_uaspee_for20sent.csv')
