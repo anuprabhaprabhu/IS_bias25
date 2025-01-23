@@ -22,5 +22,14 @@ df['severity'] = df['spkrs'].map(speaker_to_class)
 df['spkr_mos_map'] = df['spkrs'].map(spkr_mos_map)
 df['cer'] = df['cer'].round(4)
 df['wer'] = df['wer'].round(4)
+
+df['mcd_plain'] = df['mcd_plain'].round(4)
+df['mcd_dtw'] = df['mcd_dtw'].round(4)
+df['mcd_dtw_sl'] = df['mcd_dtw_sl'].round(4)
+df['cer_ref'] = df['cer_ref'].round(4)
+df['wer_ref'] = df['wer_ref'].round(4)
+
+df['gender'] = df['audio_path'].apply(lambda x: 'female' if 'F' in x.split('/')[1] else 'male')
+
 print(df.head(5))
-df.to_csv('torgo_final.csv', index=False)
+df.to_csv('torgo_final_jan23.csv', index=False)
